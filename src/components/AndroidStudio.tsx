@@ -250,7 +250,7 @@ export function AndroidStudio({ webRawInput, deadzoneSettings }: AndroidStudioPr
       if (updated.length > 35) updated.shift();
       return updated;
     });
-  }, [androidRawInput, correctedVec]);
+  }, [androidRawInput.x, androidRawInput.y, correctedVec.x, correctedVec.y]);
 
   // Render simulated Android View Canvas
   useEffect(() => {

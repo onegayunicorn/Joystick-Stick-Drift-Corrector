@@ -12,6 +12,7 @@ import { GraphMagnitude } from './components/GraphMagnitude';
 import { CalibrationPanel } from './components/CalibrationPanel';
 import { GamepadInfo } from './components/GamepadInfo';
 import { AndroidStudio } from './components/AndroidStudio';
+import { NeonAnimeStudio } from './components/NeonAnimeStudio';
 import { 
   Gamepad, 
   Cpu, 
@@ -22,7 +23,8 @@ import {
   HelpCircle,
   Eye, 
   EyeOff,
-  Smartphone
+  Smartphone,
+  Sparkles
 } from 'lucide-react';
 
 export default function App() {
@@ -65,7 +67,7 @@ export default function App() {
   });
 
   const [showExplanation, setShowExplanation] = useState(true);
-  const [activeTab, setActiveTab] = useState<'web' | 'android'>('web');
+  const [activeTab, setActiveTab] = useState<'web' | 'android' | 'neon'>('web');
 
   // Derive logical positions inside single render tick (Synchronous mathematical chain)
   const { centered: centeredInput, corrected: correctedInput } = processJoystickInput(
@@ -168,13 +170,13 @@ export default function App() {
 
       {/* Tab Navigation */}
       <div className="border-b border-slate-800 bg-[#12151B] sticky top-[61px] z-10">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex space-x-1 py-2">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex space-x-1 py-2 overflow-x-auto scrollbar-hidden">
           <button
             onClick={() => setActiveTab('web')}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+            className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'web'
                 ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20 shadow-md shadow-blue-500/5'
-                : 'text-slate-405 hover:text-slate-205 hover:bg-slate-900 border border-transparent'
+                : 'text-slate-400 hover:text-slate-205 hover:bg-slate-900 border border-transparent'
             }`}
           >
             <Gamepad className="w-4 h-4" />
@@ -183,15 +185,28 @@ export default function App() {
           
           <button
             onClick={() => setActiveTab('android')}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+            className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'android'
                 ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20 shadow-md shadow-blue-500/5'
-                : 'text-slate-405 hover:text-slate-250 hover:bg-slate-900 border border-transparent'
+                : 'text-slate-400 hover:text-slate-250 hover:bg-slate-900 border border-transparent'
             }`}
           >
             <Smartphone className="w-4 h-4" />
             <span>Android View Studio</span>
             <span className="bg-blue-500/20 text-blue-400 text-[9px] font-semibold px-1.5 py-0.5 rounded-full uppercase scale-90">SDK</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('neon')}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'neon'
+                ? 'bg-pink-500/10 text-pink-400 border border-pink-500/20 shadow-md shadow-pink-500/5'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent'
+            }`}
+          >
+            <Sparkles className="w-4 h-4 text-pink-400" />
+            <span>Neon Anime Studio</span>
+            <span className="bg-pink-500/20 text-pink-400 text-[9px] font-semibold px-1.5 py-0.5 rounded-full uppercase scale-90">THEME</span>
           </button>
         </div>
       </div>
@@ -251,7 +266,7 @@ export default function App() {
           </div>
         )}
 
-        {activeTab === 'web' ? (
+        {activeTab === 'web' && (
           <>
             {/* Live Vector Input Pair controllers (Interact layer) */}
             <JoystickArea 
@@ -588,10 +603,19 @@ export default function App() {
               </div>
             </footer>
           </>
-        ) : (
+        )}
+
+        {activeTab === 'android' && (
           <AndroidStudio 
             webRawInput={rawInput} 
             deadzoneSettings={deadzoneSettings} 
+          />
+        )}
+
+        {activeTab === 'neon' && (
+          <NeonAnimeStudio 
+            rawInput={rawInput}
+            correctedInput={correctedInput}
           />
         )}
 
