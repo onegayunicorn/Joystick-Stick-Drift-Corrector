@@ -1,0 +1,6 @@
+{
+  "name": "Stick Drift Corrector",
+  "description": "An interactive mathematical model and real-time visualization tool for joystick stick drift correction, drift calibration, and radial vs. axial deadzone mapping.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
